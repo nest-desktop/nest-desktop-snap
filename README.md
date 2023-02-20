@@ -1,13 +1,15 @@
 <h1 align="center">
-  <img src="./snap/gui/nest-desktop.png?s=256" alt="NEST Desktop">
+  <img src="./snap/gui/nest-desktop.png" scale="100%" alt="NEST Desktop">
   <br />
   NEST Desktop
 </h1>
 
-<p align="center"><b>This is the snap for NEST Desktop</b>, 
-<i>“A desktop application for spiking neuronal simulation”</i>.
+<p align="center">
+  <b>This is the snap for NEST Desktop</b>, 
+  <i>“A desktop application for spiking neuronal simulation”</i>.
 
-It works on Ubuntu, Fedora, Debian, and other major Linux distributions.</p>
+  It works on Ubuntu, Fedora, Debian, and other major Linux distributions.
+</p>
 
 <p align="center">
 <a href="https://snapcraft.io/nest-desktop">
