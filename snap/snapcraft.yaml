@@ -1,16 +1,89 @@
-name: my-snap-name # you probably want to 'snapcraft register <name>'
-version: '0.1' # just for humans, typically '1.2+git' or '1.3.2'
-summary: Single-line elevator pitch for your amazing snap # 79 char long summary
+name: nest-desktop
+title: NEST Desktop
+summary: A web-based GUI application for NEST Simulator.
 description: |
-  This is my-snap's description. You have a paragraph or two to tell the
-  most important story about your snap. Keep it under 100 words though,
-  we live in tweetspace and your description wants to look good in the snap
-  store.
+  Create spiking neuron models, run simulation and analyze the results.
 
 base: core22
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
 parts:
-  my-part:
+  bsi-trigger:
     # See 'snapcraft plugins'
     plugin: nil
+    source: https://github.com/nest-desktop/nest-desktop-snap.git
+
+  desktop-launch:
+    plugin: dump
+    prime:
+      - bin/desktop-launch
+    source: .
+    stage:
+      - bin/desktop-launch
+
+  nest-desktop:
+    build-packages:
+      - gconf2
+      - gconf-service
+      - libnotify4
+      - libnss3
+      - libxtst6
+      # - xdg-utils
+    build-snaps:
+      - node/16/stable
+    override-build: |
+      snapcraftctl build
+      yarn install
+      yarn electron:build
+      dpkg -x ${SNAPCRAFT_PART_BUILD}/dist_electron/*.deb ${SNAPCRAFT_PART_INSTALL}
+    plugin: dump
+    prime:
+      - -opt/nest-desktop/chrome-sandbox
+    source: https://github.com/babsey/nest-desktop.git
+    source-depth: 1
+    source-branch: electron-builder-deb
+    source-type: git
+    stage-packages:
+      - libnspr4
+      - libnss3
+      - libxss1
+
+  # nest-desktop:
+  #   override-build: |
+  #     snapcraftctl build
+  #   plugin: dump
+  #   prime:
+  #     - -opt/nest-desktop/chrome-sandbox    # exclude this
+  #   source: https://github.com/nest-desktop/nest-desktop/releases/download/v3.2-rc2/nest-desktop_3.2.0-rc2_amd64.deb
+  #   source-type: deb
+  #   stage-packages:
+  #     - libappindicator3-1
+  #     - libasound2
+  #     - libgbm-dev
+  #     - libgl1
+  #     - libnspr4
+  #     - libnss3
+  #     - libsecret-1-0
+  #     - libxss1
+
+  nest-simulator:
+    conda-miniconda-version: "py310_4.12.0" # https://repo.anaconda.com/miniconda/
+    conda-packages:
+      - boost>=1.69
+      - cmake>=3.12
+      - cython
+      - flask
+      - flask_cors
+      - gsl>=1.11
+      - gunicorn
+      - libtool
+      - nest-simulator
+      - numpy
+      - openmpi
+      - readline
+      - requests
+      - restrictedpython
+      - werkzeug
+      - --channel conda-forge
+    conda-python-version: "3.10"
+    plugin: conda
