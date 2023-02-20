@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./snap/gui/nest-desktop.png?v=3&s=256" alt="NEST Desktop">
+  <img src="./snap/gui/nest-desktop.png?s=256" alt="NEST Desktop">
   <br />
   NEST Desktop
 </h1>
