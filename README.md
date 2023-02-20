@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./snap/gui/nest-desktop.png?s=256" alt="NEST Desktop">
+  <img src="./snap/gui/nest-desktop.png" scale="100%" alt="NEST Desktop">
   <br />
   NEST Desktop
 </h1>
@@ -31,14 +31,7 @@ distributions.</p>
 
 ([Don't have snapd installed?](https://snapcraft.io/docs/core/install))
 
-<<<<<<< HEAD
 ## Remaining tasks
-=======
-<!-- ## Remaining tasks -->
-<!-- Uncomment and modify this when you have a screenshot
-![nest-desktop](screenshot.png?raw=true "nest-desktop")
--->
->>>>>>> 773eea3 (Update README)
 
 <!-- Snapcrafters ([join us](https://forum.snapcraft.io/t/snapcrafters-reboot/24625)) are working to land snap install documentation and the [snapcraft.yaml](https://github.com/snapcrafters/fork-and-rename-me/blob/master/snap/snapcraft.yaml) upstream so [Project] can authoritatively publish future releases.
 
