@@ -1,6 +1,6 @@
 name: nest-desktop
 title: NEST Desktop
-summary: A web-based GUI application for NEST Simulator. 
+summary: A web-based GUI application for NEST Simulator.
 description: |
   Create spiking neuron models, run simulation and analyze the results.
 
@@ -9,7 +9,7 @@ description: |
   Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
 license: MIT
 icon: snap/gui/nest-desktop.png
-version: 3.2.0-rc2
+version: 3.2.0
 
 base: core20
 grade: stable
@@ -83,7 +83,7 @@ parts:
       yarn electron:build
       dpkg -x ${SNAPCRAFT_PART_BUILD}/dist_electron/*.deb ${SNAPCRAFT_PART_INSTALL}
     plugin: dump
-    prime: 
+    prime:
       - -opt/nest-desktop/chrome-sandbox
     source: https://github.com/babsey/nest-desktop.git
     source-depth: 1
@@ -93,7 +93,7 @@ parts:
       - libnspr4
       - libnss3
       - libxss1
-    
+
 
   # nest-desktop:
   #   override-build: |
@@ -123,8 +123,8 @@ parts:
       - flask_cors
       - gsl>=1.11
       - gunicorn
-      - libtool 
-      - nest-simulator
+      - libtool
+      - nest-simulator==3.3
       - numpy
       - openmpi
       - readline
