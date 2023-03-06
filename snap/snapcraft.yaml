@@ -41,7 +41,7 @@ parts:
       - -opt/nest-desktop/chrome-sandbox
     source: https://github.com/babsey/nest-desktop.git
     source-depth: 1
-    source-branch: electron-builder-deb
+    source-branch: main
     source-type: git
     stage-packages:
       - libnspr4
