@@ -39,7 +39,7 @@ parts:
     plugin: dump
     prime:
       - -opt/nest-desktop/chrome-sandbox
-    source: https://github.com/babsey/nest-desktop.git
+    source: https://github.com/nest-desktop/nest-desktop.git
     source-depth: 1
     source-branch: main
     source-type: git
