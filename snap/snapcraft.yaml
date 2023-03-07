@@ -35,23 +35,6 @@ apps:
       # - wayland # access compositors providing the Wayland protocol
       # - x11 # monitor mouse/keyboard input and graphics output of other apps
 
-  # server-daemon:
-  #   command: bin/nest-server start
-  #   daemon: simple
-  #   environment:
-  #     NEST_SERVER_HOST: "127.0.0.1"
-  #     NEST_SERVER_MODULES: nest,numpy
-  #     NEST_SERVER_PORT: 52425
-  #     NEST_SERVER_RESTRICTION_OFF: 1
-  #     NEST_SERVER_STDOUT: 1
-  #     PATH: ${SNAP}/bin:${PATH}
-  #     PYTHONPATH: ${SNAP}/lib/python3.10/site-packages:${PYTHONPATH}
-  #   install-mode: disable
-  #   plugs:
-  #     - network # enables network access
-  #     - network-bind # operate as a network service
-  #   refresh-mode: restart
-  #   restart-condition: on-abnormal
 
 parts:
   bsi-trigger:
@@ -85,7 +68,7 @@ parts:
     plugin: dump
     prime:
       - -opt/nest-desktop/chrome-sandbox
-    source: https://github.com/babsey/nest-desktop.git
+    source: https://github.com/nest-desktop/nest-desktop.git
     source-depth: 1
     source-branch: main
     source-type: git
@@ -93,25 +76,6 @@ parts:
       - libnspr4
       - libnss3
       - libxss1
-
-
-  # nest-desktop:
-  #   override-build: |
-  #     snapcraftctl build
-  #   plugin: dump
-  #   prime:
-  #     - -opt/nest-desktop/chrome-sandbox    # exclude this
-  #   source: https://github.com/nest-desktop/nest-desktop/releases/download/v3.2-rc2/nest-desktop_3.2.0-rc2_amd64.deb
-  #   source-type: deb
-  #   stage-packages:
-  #     - libappindicator3-1
-  #     - libasound2
-  #     - libgbm-dev
-  #     - libgl1
-  #     - libnspr4
-  #     - libnss3
-  #     - libsecret-1-0
-  #     - libxss1
 
   nest-simulator:
     conda-miniconda-version: "py310_4.12.0" # https://repo.anaconda.com/miniconda/
