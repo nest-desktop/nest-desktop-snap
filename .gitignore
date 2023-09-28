@@ -2,6 +2,7 @@
 /parts/
 /stage/
 /prime/
+snap/local/
 
 *.snap
 
