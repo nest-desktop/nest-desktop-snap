@@ -9,7 +9,7 @@ description: |
   Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
 license: MIT
 icon: snap/gui/nest-desktop.png
-version: 3.2.0
+version: 3.3.0
 
 base: core20
 grade: stable
@@ -70,7 +70,7 @@ parts:
       - -opt/nest-desktop/chrome-sandbox
     source: https://github.com/nest-desktop/nest-desktop.git
     source-depth: 1
-    source-branch: main
+    source-branch: dev
     source-type: git
     stage-packages:
       - libnspr4
@@ -78,23 +78,16 @@ parts:
       - libxss1
 
   nest-simulator:
-    conda-miniconda-version: "py310_4.12.0" # https://repo.anaconda.com/miniconda/
+    conda-miniconda-version: "py39_4.12.0" # https://repo.anaconda.com/miniconda/
     conda-packages:
-      - boost>=1.69
-      - cmake>=3.12
-      - cython
       - flask
       - flask_cors
-      - gsl>=1.11
       - gunicorn
-      - libtool
-      - nest-simulator==3.4
+      - nest-simulator==3.5
       - numpy
-      - openmpi
-      - readline
       - requests
       - restrictedpython
       - werkzeug
       - --channel conda-forge
-    conda-python-version: "3.10"
+    conda-python-version: "3.9"
     plugin: conda
