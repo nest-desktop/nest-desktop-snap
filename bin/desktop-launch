@@ -1,29 +1,18 @@
 #!/bin/bash
 
-# Define environment variables
-export PATH=${SNAP}/bin:${PATH}
-export PYTHONPATH=${SNAP}/lib/python3.9/site-packages:${PYTHONPATH}
-
-export NEST_SERVER_DAEMON=1
-export NEST_SERVER_HOST="localhost"
-export NEST_SERVER_PORT=52425
-export NEST_SERVER_STDOUT=1
-
-# < 3.6
-export NEST_SERVER_MODULES="nest,numpy"
-export NEST_SERVER_RESTRICTION_OFF=1
-
-# >= 3.6
-# export NEST_SERVER_DISABLE_AUTH=1
-# export NEST_SERVER_DISABLE_RESTRICTION=1
-# export NEST_SERVER_ENABLE_EXEC_CALL=1
-# export NEST_SERVER_MODULES="import nest; import numpy; import numpy as np"
-
 # Start NEST Server as daemon
-${SNAP}/bin/nest-server start
+export NEST_SERVER_DAEMON=1
+nest-server start
+
+# # Start NESTML Server as daemon
+export NESTML_SERVER_DAEMON=1
+${SNAP}/bin/nestml-server start
 
 # Start NEST Desktop
 ${SNAP}/opt/nest-desktop/nest-desktop --no-sandbox
 
 # Stop NEST Server
-${SNAP}/bin/nest-server stop
+nest-server stop
+
+# # Stop NESTML Server
+${SNAP}/bin/nestml-server stop
