@@ -1,0 +1,9 @@
+[Desktop Entry]
+Categories=Education;Science;
+Comment=NEST Desktop is a web-based GUI for NEST Simulator and other simulators of spiking networks.
+Exec=/nest-desktop/nest-desktop %U
+Icon=nest-desktop
+Name=NEST Desktop
+Terminal=false
+Type=Application
+Version=4.0
