@@ -2,6 +2,13 @@
 
 source ${SNAP}/bin/nest_vars.sh
 
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${NESTML_MODULES_PATH}
+
+export NEST_SERVER_DISABLE_AUTH=1
+export NEST_SERVER_DISABLE_RESTRICTION=1
+export NEST_SERVER_ENABLE_EXEC_CALL=1
+export NEST_SERVER_MODULES="import nest; import numpy; import numpy as np"
+
 # Start NEST Server as daemon
 export NEST_SERVER_DAEMON=1
 ${SNAP}/bin/nest-server start
@@ -11,7 +18,7 @@ export NESTML_SERVER_DAEMON=1
 ${SNAP}/bin/nestml-server start
 
 # Start NEST Desktop
-${SNAP}/opt/nest-desktop/nest-desktop --no-sandbox
+${SNAP}/nest-desktop/nest-desktop --no-sandbox
 
 # Stop NEST Server
 ${SNAP}/bin/nest-server stop
