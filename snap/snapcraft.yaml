@@ -1,3 +1,6 @@
+---
+# https://www.electronjs.org/docs/latest/tutorial/snapcraft#using-electron-installer-snap
+
 name: nest-desktop
 title: NEST Desktop
 summary: A web-based GUI application for NEST Simulator.
@@ -9,32 +12,32 @@ description: |
   Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
 license: MIT
 icon: snap/gui/nest-desktop.png
-version: 3.3.0
+version: 4.0.0-beta9
 
-base: core20
-grade: stable
+base: core22
+grade: devel # options: devel, stable
 confinement: strict
 
 architectures:
-  - build-on: amd64
+  - build-on: [amd64]
 
 apps:
   nest-desktop:
     command: bin/desktop-launch
     desktop: usr/share/applications/nest-desktop.desktop
-    extensions: [gnome-3-38]
+    environment:
+      NEST_SERVER_DISABLE_AUTH: 1
+      NEST_SERVER_DISABLE_RESTRICTION: 1
+      NEST_SERVER_ENABLE_EXEC_CALL: 1
+      NEST_SERVER_MODULES: import nest; import numpy; import numpy as np
+
+      NESTML_MODULES_PATH: /tmp/nestmlmodules
+      LD_LIBRARY_PATH: ${LD_LIBRARY_PATH}:${NESTML_MODULES_PATH}
+    extensions: [gnome]
     plugs:
-      - browser-support # use functions essential for Web browsers
-      # - desktop # provides access to common desktop elements
-      # - desktop-legacy # enables the use of legacy desktop methods (including input method and accessibility services)
-      - home # access non-hidden files in the home directory
+      - browser-support # use functions essential for web browsers
       - network # enables network access
       - network-bind # operate as a network service
-      - opengl # access OpenGL/GPU hardware
-      - unity7 # allows interacting with Unity 7 services
-      # - wayland # access compositors providing the Wayland protocol
-      # - x11 # monitor mouse/keyboard input and graphics output of other apps
-
 
 parts:
   bsi-trigger:
@@ -44,50 +47,123 @@ parts:
 
   desktop-launch:
     plugin: dump
-    prime:
-      - bin/desktop-launch
+    # prime:
+    #   - bin
     source: .
     stage:
-      - bin/desktop-launch
+      - bin
 
   nest-desktop:
-    build-packages:
-      - gconf2
-      - gconf-service
-      - libnotify4
-      - libnss3
-      - libxtst6
-      # - xdg-utils
-    build-snaps:
-      - node/16/stable
-    override-build: |
-      snapcraftctl build
-      yarn install
-      yarn electron:build
-      dpkg -x ${SNAPCRAFT_PART_BUILD}/dist_electron/*.deb ${SNAPCRAFT_PART_INSTALL}
     plugin: dump
-    prime:
-      - -opt/nest-desktop/chrome-sandbox
+    build-packages:
+      - bison
+      - build-essential
+      - clang
+      - g++-multilib
+      - gcc-multilib
+      - gperf
+      - libasound2-dev
+      - libcap-dev
+      - libcups2-dev
+      - libdbus-1-dev
+      - libgtk-3-dev
+      - libnotify-dev
+      - libnss3-dev
+      - libxss1
+      - libxtst-dev
+      - openjdk-8-jre
+      - python3-dbusmock
+    build-snaps:
+      - node/20/stable
+    override-build: |
+      craftctl default
+      yarn install
+      yarn app:build:deb
+      dpkg -x ${CRAFT_PART_BUILD}/release/*.deb ${CRAFT_PART_INSTALL}
     source: https://github.com/nest-desktop/nest-desktop.git
     source-depth: 1
     source-branch: dev
     source-type: git
+    stage:
+      - -opt/nest-desktop/chrome-sandbox
+      - opt/nest-desktop
+      - usr/share
     stage-packages:
       - libnspr4
       - libnss3
       - libxss1
 
-  nest-simulator:
-    conda-miniconda-version: "py39_4.12.0" # https://repo.anaconda.com/miniconda/
+  #
+  # Compiling NEST with cmake failed, because installed file are moved in stage and prime steps.
+  # It needs a post-install script to rewrite nest-config and SLIStartup.
+  #
+  # nest-simulator:
+  #   plugin: cmake
+  #   cmake-parameters:
+  #     - -DCMAKE_INSTALL_PREFIX:PATH=/usr
+  #     # - -DCMAKE_BUILD_TYPE=Release   # Compile without debug, make it faster
+  #   build-packages:
+  #     - build-essential
+  #     - cmake
+  #     - cython3
+  #     - libgsl-dev
+  #     - libltdl-dev
+  #     - libmpich-dev
+  #     - libncurses5-dev
+  #     - libopenmpi-dev
+  #     - libreadline-dev
+  #     - pandoc
+  #     - python3-dev
+  #     - python3-pip
+  #     - wget
+  #   override-build: |
+  #     python3 -m pip install cython
+  #     python3 -m pip install -r ${CRAFT_PART_SRC}/requirements_pynest.txt
+  #     python3 -m pip install -r ${CRAFT_PART_SRC}/requirements_nest_server.txt
+  #     craftctl default
+  #     # cmake -DCMAKE_INSTALL_PREFIX:PATH=${CRAFT_PART_INSTALL} ${CRAFT_PART_SRC}
+  #     # make -j $(nproc)
+  #     # make install
+  #   source: https://github.com/nest/nest-simulator.git
+  #   source-depth: 1
+  #   source-tag: v3.7
+  #   source-type: git
+  #   stage-packages:
+  #     - libgsl-dev
+
+  backend-tools:
+    plugin: conda
+    build-environment:
+      - PATH: /root/miniconda/bin:$PATH
+      - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
+    conda-miniconda-version: "py310_24.5.0-0" # https://repo.anaconda.com/miniconda/
     conda-packages:
       - flask
       - flask_cors
       - gunicorn
-      - nest-simulator==3.5
+      - nest-simulator==3.8
+      - nestml==8.0
+      # - norse
       - numpy
       - requests
       - restrictedpython
       - werkzeug
       - --channel conda-forge
-    conda-python-version: "3.9"
-    plugin: conda
+    conda-python-version: "3.10"
+    stage:
+      - -bin/nest-config
+      - -doc
+      - -extras
+
+  backend-server:
+    plugin: python
+    python-packages:
+      - nestml-server@git+https://github.com/babsey/nestml-server@v1.0-b4
+      # - norse-server@git+https://github.com/babsey/norse-server.git
+      - --no-deps
+    source: https://github.com/nest-desktop/nest-desktop-snap
+    source-depth: 1
+    source-type: git
+    stage:
+      - bin/nestml-server
+      - lib/python3.10/site-packages/nestml_server

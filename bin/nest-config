@@ -65,7 +65,7 @@ while test $# -gt 0; do
         echo " -I$prefix/include/nest -I$prefix/include -I$prefix/include -I$prefix/include -I$prefix/include "
         ;;
     --cflags)
-        echo "-fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem $prefix/include -fdebug-prefix-map=/home/conda/feedstock_root/build_artifacts/nest-simulator_1722832811001/work=/usr/local/src/conda/nest-simulator-3.8 -fdebug-prefix-map=$prefix=/usr/local/src/conda-prefix -lrt -std=c++17 -Wall -fopenmp -O2 -fdiagnostics-color=auto"
+        echo "-fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem $prefix/include -lrt -std=c++17 -Wall -fopenmp -O2 -fdiagnostics-color=auto"
         ;;
     --libs)
         echo "-L$prefix/lib/nest -lnest -lsli $prefix/lib/libltdl.so $prefix/lib/libreadline.so $prefix/lib/libncurses.so $prefix/lib/libgsl.so $prefix/lib/libgslcblas.so $prefix/lib/libgomp.so $prefix/x86_64-conda-linux-gnu/sysroot/usr/lib/libpthread.so"
@@ -90,13 +90,13 @@ while test $# -gt 0; do
         echo "OFF"
         ;;
     --docdir)
-        echo "$prefix/share/doc/nest"
+        echo "share/doc/nest"
         ;;
     --datadir)
-        echo "$prefix/share/nest"
+        echo "share/nest"
         ;;
     --libdir)
-        echo "$prefix/lib"
+        echo "lib"
         ;;
     *)
         usage
