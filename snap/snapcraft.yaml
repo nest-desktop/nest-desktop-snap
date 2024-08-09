@@ -1,3 +1,6 @@
+---
+# https://www.electronjs.org/docs/latest/tutorial/snapcraft#using-electron-installer-snap
+
 name: nest-desktop
 title: NEST Desktop
 summary: A web-based GUI application for NEST Simulator.
@@ -15,34 +18,47 @@ parts:
 
   desktop-launch:
     plugin: dump
-    prime:
-      - bin/desktop-launch
+    # prime:
+    #   - bin
     source: .
     stage:
-      - bin/desktop-launch
+      - bin
 
   nest-desktop:
-    build-packages:
-      - gconf2
-      - gconf-service
-      - libnotify4
-      - libnss3
-      - libxtst6
-      # - xdg-utils
-    build-snaps:
-      - node/16/stable
-    override-build: |
-      snapcraftctl build
-      yarn install
-      yarn electron:build
-      dpkg -x ${SNAPCRAFT_PART_BUILD}/dist_electron/*.deb ${SNAPCRAFT_PART_INSTALL}
     plugin: dump
-    prime:
-      - -opt/nest-desktop/chrome-sandbox
+    build-packages:
+      - bison
+      - build-essential
+      - clang
+      - g++-multilib
+      - gcc-multilib
+      - gperf
+      - libasound2-dev
+      - libcap-dev
+      - libcups2-dev
+      - libdbus-1-dev
+      - libgtk-3-dev
+      - libnotify-dev
+      - libnss3-dev
+      - libxss1
+      - libxtst-dev
+      - openjdk-8-jre
+      - python3-dbusmock
+    build-snaps:
+      - node/20/stable
+    override-build: |
+      craftctl default
+      yarn install
+      yarn app:build:deb
+      dpkg -x ${CRAFT_PART_BUILD}/release/*.deb ${CRAFT_PART_INSTALL}
     source: https://github.com/nest-desktop/nest-desktop.git
     source-depth: 1
     source-branch: dev
     source-type: git
+    stage:
+      - -opt/nest-desktop/chrome-sandbox
+      - opt/nest-desktop
+      - usr/share
     stage-packages:
       - libnspr4
       - libnss3
@@ -79,5 +95,21 @@ parts:
       - restrictedpython
       - werkzeug
       - --channel conda-forge
-    conda-python-version: "3.9"
-    plugin: conda
+    conda-python-version: "3.10"
+    stage:
+      - -bin/nest-config
+      - -doc
+      - -extras
+
+  backend-server:
+    plugin: python
+    python-packages:
+      - nestml-server@git+https://github.com/babsey/nestml-server@v1.0-b4
+      # - norse-server@git+https://github.com/babsey/norse-server.git
+      - --no-deps
+    source: https://github.com/nest-desktop/nest-desktop-snap
+    source-depth: 1
+    source-type: git
+    stage:
+      - bin/nestml-server
+      - lib/python3.10/site-packages/nestml_server

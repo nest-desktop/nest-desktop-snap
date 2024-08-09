@@ -1,10 +1,12 @@
 #!/bin/bash
 
+source ${SNAP}/bin/nest_vars.sh
+
 # Start NEST Server as daemon
 export NEST_SERVER_DAEMON=1
-nest-server start
+${SNAP}/bin/nest-server start
 
-# # Start NESTML Server as daemon
+# Start NESTML Server as daemon
 export NESTML_SERVER_DAEMON=1
 ${SNAP}/bin/nestml-server start
 
@@ -12,7 +14,7 @@ ${SNAP}/bin/nestml-server start
 ${SNAP}/opt/nest-desktop/nest-desktop --no-sandbox
 
 # Stop NEST Server
-nest-server stop
+${SNAP}/bin/nest-server stop
 
-# # Stop NESTML Server
+# Stop NESTML Server
 ${SNAP}/bin/nestml-server stop
