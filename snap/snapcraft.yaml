@@ -12,7 +12,6 @@ confinement: devmode # use 'strict' once you have the right plugs and slots
 
 parts:
   bsi-trigger:
-    # See 'snapcraft plugins'
     plugin: nil
     source: https://github.com/nest-desktop/nest-desktop-snap.git
 
@@ -28,7 +27,6 @@ parts:
     build-snaps:
       - node/20/stable
     override-build: |
-      # craftctl default
       yarn install
       yarn app:build --linux dir
       cp -rv ./release/linux-unpacked ${CRAFT_PART_INSTALL}/nest-desktop
