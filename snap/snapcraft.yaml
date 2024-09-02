@@ -12,7 +12,7 @@ description: |
   Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
 license: MIT
 icon: snap/gui/nest-desktop.png
-version: 4.0.0-beta9
+version: 4.0.0-beta10
 
 base: core22
 grade: devel # options: devel, stable
@@ -50,8 +50,7 @@ parts:
     build-snaps:
       - node/20/stable
     override-build: |
-      yarn install
-      yarn app:build --linux dir
+      yarn install; yarn app:build --linux dir
       cp -rv ./release/linux-unpacked ${CRAFT_PART_INSTALL}/nest-desktop
     source: https://github.com/nest-desktop/nest-desktop.git
     source-depth: 1
@@ -104,7 +103,7 @@ parts:
     build-environment:
       - PATH: /root/miniconda/bin:$PATH
       - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
-    conda-miniconda-version: "py310_24.5.0-0" # https://repo.anaconda.com/miniconda/
+    conda-miniconda-version: "py310_24.7.1-0" # https://repo.anaconda.com/miniconda/
     conda-packages:
       - flask
       - flask_cors
