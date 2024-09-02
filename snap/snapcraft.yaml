@@ -27,8 +27,7 @@ parts:
     build-snaps:
       - node/20/stable
     override-build: |
-      yarn install
-      yarn app:build --linux dir
+      yarn install; yarn app:build --linux dir
       cp -rv ./release/linux-unpacked ${CRAFT_PART_INSTALL}/nest-desktop
     source: https://github.com/nest-desktop/nest-desktop.git
     source-depth: 1
