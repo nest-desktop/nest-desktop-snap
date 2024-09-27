@@ -12,7 +12,7 @@ description: |
   Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
 license: MIT
 icon: snap/gui/nest-desktop.png
-version: 4.0.0-beta10
+version: 4.0.0-beta12
 
 base: core22
 grade: devel # options: devel, stable
@@ -125,7 +125,7 @@ parts:
   backend-server:
     plugin: python
     python-packages:
-      - nestml-server@git+https://github.com/babsey/nestml-server@v1.0-b4
+      - nestml-server@git+https://github.com/babsey/nestml-server@v1.0-b6
       # - norse-server@git+https://github.com/babsey/norse-server.git
       - --no-deps
     source: https://github.com/nest-desktop/nest-desktop-snap
