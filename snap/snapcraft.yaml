@@ -12,7 +12,7 @@ description: |
   Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
 license: MIT
 icon: snap/gui/nest-desktop.png
-version: 4.0.0-beta12
+version: 4.0.0-rc1
 
 base: core22
 grade: devel # options: devel, stable
