@@ -31,7 +31,8 @@ parts:
       cp -rv ./release/linux-unpacked ${CRAFT_PART_INSTALL}/nest-desktop
     source: https://github.com/nest-desktop/nest-desktop.git
     source-depth: 1
-    source-branch: dev
+    source-branch: main
+    # source-tag: v4.0
     source-type: git
     stage-packages:
       - libnspr4
