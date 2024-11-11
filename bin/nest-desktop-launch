@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source ${SNAP}/bin/nest_vars.sh
+export PATH=${SNAP}/bin:$PATH
+
+source nest_vars.sh
 
 export NESTML_MODULES_PATH="${NESTML_MODULES_PATH:-/tmp/nestmlmodules}"
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${NESTML_MODULES_PATH}
@@ -12,17 +14,17 @@ export NEST_SERVER_MODULES="import nest; import numpy; import numpy as np"
 
 # Start NEST Server as daemon
 export NEST_SERVER_DAEMON=1
-${SNAP}/bin/nest-server start
+nest-server start
 
 # Start NESTML Server as daemon
 export NESTML_SERVER_DAEMON=1
-${SNAP}/bin/nestml-server start
+nestml-server start
 
 # Start NEST Desktop
-${SNAP}/nest-desktop/nest-desktop --no-sandbox
+nest-desktop
 
 # Stop NEST Server
-${SNAP}/bin/nest-server stop
+nest-server stop
 
 # Stop NESTML Server
-${SNAP}/bin/nestml-server stop
+nestml-server stop
