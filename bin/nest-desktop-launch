@@ -21,7 +21,7 @@ export NESTML_SERVER_DAEMON=1
 nestml-server start
 
 # Start NEST Desktop
-nest-desktop
+nest-desktop --no-sandbox
 
 # Stop NEST Server
 nest-server stop
