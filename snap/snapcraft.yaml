@@ -3,25 +3,26 @@
 
 name: nest-desktop
 title: NEST Desktop
-summary: A web-based GUI application for NEST Simulator.
+summary: A web-based application for spiking neuronal networks.
 description: |
   Create spiking neuron models, run simulation and analyze the results.
 
-base: core22
-confinement: devmode # use 'strict' once you have the right plugs and slots
+  **Are you having issues?**
 
-parts:
-  bsi-trigger:
-    plugin: nil
-    source: https://github.com/nest-desktop/nest-desktop-snap.git
+  Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
+license: MIT
+icon: snap/gui/nest-desktop.png
+version: 4.0.2
 
-  desktop-launch:
-    plugin: dump
-    source: .
-    stage:
-      - bin
-      - usr
+base: core24
+grade: stable # options: devel, stable
+confinement: strict
 
+platforms:
+  amd64:
+  arm64:
+
+apps:
   nest-desktop:
     plugin: nil
     build-snaps:
