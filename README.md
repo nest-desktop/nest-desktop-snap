@@ -11,9 +11,6 @@ distributions.</p>
 <a href="https://snapcraft.io/nest-desktop">
   <img alt="enpass" src="https://snapcraft.io/nest-desktop/badge.svg" />
 </a>
-<a href="https://snapcraft.io/nest-desktop">
-  <img alt="enpass" src="https://snapcraft.io/nest-desktop/trending.svg?name=0" />
-</a>
 </p>
 
 
