@@ -4,7 +4,7 @@
   NEST Desktop
 </h1>
 
-<p align="center"><b>This is the snap for <a href="[Link]">[Project]</a></b>, <i>“Single-line elevator pitch for your amazing snap”</i>. It works on Ubuntu, Fedora, Debian, and other major Linux
+<p align="center"><b>This is the snap for <a href="https://snapcraft.io/nest-desktop">NEST Desktop</a></b>, <i>“A web-based application for spiking neuronal networks”</i>. It works on Ubuntu, Fedora, Debian, and other major Linux
 distributions.</p>
 
 <p align="center">
