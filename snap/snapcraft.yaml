@@ -24,6 +24,29 @@ platforms:
 
 apps:
   nest-desktop:
+    command: bin/nest-desktop-launch
+    desktop: usr/share/applications/nest-desktop.desktop
+    environment:
+      NESTML_MODULES_PATH: /tmp/nestmlmodules
+    extensions: [gnome]
+    plugs:
+      - browser-support # use functions essential for web browsers
+      - network # enables network access
+      - network-bind # operate as a network service
+
+parts:
+  bsi-trigger:
+    plugin: nil
+    source: https://github.com/nest-desktop/nest-desktop-snap.git
+
+  desktop-launch:
+    plugin: dump
+    source: .
+    stage:
+      - bin
+      - usr
+
+  nest-desktop:
     plugin: nil
     build-snaps:
       - node/22/stable
@@ -38,32 +61,54 @@ apps:
       - libnspr4
       - libnss3
 
-  # nest-desktop:
+  # nest-simulator:
+  #   plugin: cmake
+  #   cmake-parameters:
+  #     - -DCMAKE_INSTALL_PREFIX:PATH=/usr
+  #     # - -DCMAKE_BUILD_TYPE=Release   # Compile without debug, make it faster
+  #   build-packages:
+  #     - build-essential
+  #     - cmake
+  #     - cython3
+  #     - libgsl-dev
+  #     - libltdl-dev
+  #     - libmpich-dev
+  #     - libncurses5-dev
+  #     - libopenmpi-dev
+  #     - libreadline-dev
+  #     - pandoc
+  #     - python3-dev
+  #     - python3-pip
+  #     - wget
   #   override-build: |
-  #     snapcraftctl build
-  #   plugin: dump
-  #   prime:
-  #     - -opt/nest-desktop/chrome-sandbox    # exclude this
-  #   source: https://github.com/nest-desktop/nest-desktop/releases/download/v3.2-rc2/nest-desktop_3.2.0-rc2_amd64.deb
-  #   source-type: deb
+  #     python3 -m pip install cython
+  #     python3 -m pip install -r ${CRAFT_PART_SRC}/requirements_pynest.txt
+  #     python3 -m pip install -r ${CRAFT_PART_SRC}/requirements_nest_server.txt
+  #     craftctl default
+  #     # cmake -DCMAKE_INSTALL_PREFIX:PATH=${CRAFT_PART_INSTALL} ${CRAFT_PART_SRC}
+  #     # make -j $(nproc)
+  #     # make install
+  #   source: https://github.com/nest/nest-simulator.git
+  #   source-depth: 1
+  #   source-tag: v3.7
+  #   source-type: git
   #   stage-packages:
-  #     - libappindicator3-1
-  #     - libasound2
-  #     - libgbm-dev
-  #     - libgl1
-  #     - libnspr4
-  #     - libnss3
-  #     - libsecret-1-0
-  #     - libxss1
+  #     - libgsl-dev
 
-  nest-simulator:
-    conda-miniconda-version: "py39_4.12.0" # https://repo.anaconda.com/miniconda/
+  backend-tools:
+    plugin: conda
+    build-environment:
+      - PATH: /root/miniconda/bin:$PATH
+      - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
+    conda-miniconda-version: "py312_24.9.2.0" # https://repo.anaconda.com/miniconda/
     conda-packages:
       - flask
       - flask_cors
       - gunicorn
       - libtool
-      - nest-simulator
+      - nest-simulator==3.8
+      - nestml==8.0
+      # - norse
       - numpy
       - requests
       - restrictedpython
