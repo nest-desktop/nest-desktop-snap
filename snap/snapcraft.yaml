@@ -14,13 +14,18 @@ license: MIT
 icon: snap/gui/nest-desktop.png
 version: 4.0.3
 
-base: core24
+base: core22
 grade: stable # options: devel, stable
 confinement: strict
 
-platforms:
-  amd64:
-  arm64:
+# for core22
+architectures:
+  - build-on: [amd64]
+
+# for core24
+# platforms:
+#   amd64:
+#   arm64:
 
 apps:
   nest-desktop:
@@ -97,7 +102,11 @@ parts:
 
   backend-tools:
     plugin: conda
-    # conda-miniconda-version: "py312_24.9.2.0" # https://repo.anaconda.com/miniconda/
+    # for core22
+    build-environment:
+      - PATH: /root/miniconda/bin:$PATH
+      - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
+    # conda-miniconda-version: "py310_24.9.2-0" # https://repo.anaconda.com/miniconda/
     conda-packages:
       - flask
       - flask_cors
@@ -111,7 +120,7 @@ parts:
       - restrictedpython
       - werkzeug
       - --channel conda-forge
-    conda-python-version: "3.12"
+    conda-python-version: "3.10"
     stage:
       - -bin/nest-config
       - -doc
@@ -128,4 +137,4 @@ parts:
     source-type: git
     stage:
       - bin/nestml-server
-      - lib/python3.12/site-packages/nestml_server
+      - lib/python3.10/site-packages/nestml_server
