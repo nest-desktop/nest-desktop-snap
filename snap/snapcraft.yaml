@@ -36,6 +36,7 @@ apps:
     extensions: [gnome]
     plugs:
       - browser-support # use functions essential for web browsers
+      - home # access non-hidden files in the home directory
       - network # enables network access
       - network-bind # operate as a network service
 
@@ -129,7 +130,7 @@ parts:
   backend-server:
     plugin: python
     python-packages:
-      - nestml-server@git+https://github.com/babsey/nestml-server@v1.0-b6
+      - nestml-server@git+https://github.com/babsey/nestml-server@v1.0-b8
       # - norse-server@git+https://github.com/babsey/norse-server.git
       - --no-deps
     source: https://github.com/nest-desktop/nest-desktop-snap
