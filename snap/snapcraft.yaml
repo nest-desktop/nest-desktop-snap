@@ -107,6 +107,8 @@ parts:
     build-environment:
       - PATH: /root/miniconda/bin:$PATH
       - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
+    build-packages:
+      - curl
     # conda-miniconda-version: "py310_24.9.2-0" # https://repo.anaconda.com/miniconda/
     conda-packages:
       - flask
