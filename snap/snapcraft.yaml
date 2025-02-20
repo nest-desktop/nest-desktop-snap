@@ -61,7 +61,7 @@ parts:
       cp -rv ./release/linux-unpacked ${CRAFT_PART_INSTALL}/nest-desktop
     source: https://github.com/nest-desktop/nest-desktop.git
     source-depth: 1
-    source-branch: dev
+    source-branch: v4.0.5
     source-type: git
     stage-packages:
       - libnspr4
@@ -107,8 +107,6 @@ parts:
     build-environment:
       - PATH: /root/miniconda/bin:$PATH
       - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
-    build-packages:
-      - curl
     # conda-miniconda-version: "py310_24.9.2-0" # https://repo.anaconda.com/miniconda/
     conda-packages:
       - flask
