@@ -3,7 +3,7 @@
 
 name: nest-desktop
 title: NEST Desktop
-summary: A web-based application for spiking neuronal networks.
+summary: Simulate spiking neuronal networks
 description: |
   Create spiking neuron models, run simulation and analyze the results.
 
@@ -30,6 +30,7 @@ architectures:
 apps:
   nest-desktop:
     command: bin/nest-desktop-launch
+    common-id: io.github.nest_desktop.nest-desktop
     desktop: usr/share/applications/nest-desktop.desktop
     environment:
       NESTML_MODULES_PATH: /tmp/nestmlmodules
