@@ -12,7 +12,7 @@ description: |
   Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
 license: MIT
 icon: snap/gui/nest-desktop.png
-version: 4.0.5
+version: 4.1.0
 
 base: core22
 grade: stable # options: devel, stable
@@ -34,6 +34,7 @@ apps:
     desktop: usr/share/applications/nest-desktop.desktop
     environment:
       NESTML_MODULES_PATH: /tmp/nestmlmodules
+      NESTML_SERVER_TIMEOUT: 120
     extensions: [gnome]
     plugs:
       - browser-support # use functions essential for web browsers
@@ -54,16 +55,10 @@ parts:
       - usr
 
   nest-desktop:
-    plugin: nil
-    build-snaps:
-      - node/22/stable
+    plugin: dump
+    source: https://github.com/nest-desktop/nest-desktop-electron/releases/download/v4.1.0/nest-desktop-4.1.0.tar.gz
     override-build: |
-      yarn install; yarn app:build --linux dir
-      cp -rv ./release/linux-unpacked ${CRAFT_PART_INSTALL}/nest-desktop
-    source: https://github.com/nest-desktop/nest-desktop.git
-    source-depth: 1
-    source-branch: v4.0.5
-    source-type: git
+      cp -rv . ${CRAFT_PART_INSTALL}/nest-desktop
     stage-packages:
       - libnspr4
       - libnss3
@@ -111,7 +106,7 @@ parts:
     # conda-miniconda-version: "py310_24.9.2-0" # https://repo.anaconda.com/miniconda/
     conda-packages:
       - flask
-      - flask_cors
+      - flask-cors
       - gunicorn
       - libtool
       - nest-simulator==3.8
@@ -131,7 +126,7 @@ parts:
   backend-server:
     plugin: python
     python-packages:
-      - nestml-server@git+https://github.com/babsey/nestml-server@v1.0-b8
+      - nestml-server@git+https://github.com/babsey/nestml-server@v1.0
       # - norse-server@git+https://github.com/babsey/norse-server.git
       - --no-deps
     source: https://github.com/nest-desktop/nest-desktop-snap
