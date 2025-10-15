@@ -12,20 +12,20 @@ description: |
   Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
 license: MIT
 icon: snap/gui/nest-desktop.png
-version: 4.1.0
+version: 4.2.0
 
-base: core22
+base: core24
 grade: stable # options: devel, stable
 confinement: strict
 
 # for core22
-architectures:
-  - build-on: [amd64]
+# architectures:
+#   - build-on: [amd64]
 
 # for core24
-# platforms:
-#   amd64:
-#   arm64:
+platforms:
+  amd64:
+  arm64:
 
 apps:
   nest-desktop:
@@ -99,39 +99,37 @@ parts:
 
   backend-tools:
     plugin: conda
-    # for core22
     build-environment:
-      - PATH: /root/miniconda/bin:$PATH
-      - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
-    # conda-miniconda-version: "py310_24.9.2-0" # https://repo.anaconda.com/miniconda/
+      - CONDA_PLUGINS_AUTO_ACCEPT_TOS: "yes"
+    # for core22
+      # - PATH: /root/miniconda/bin:$PATH
+      # - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
+    # https://repo.anaconda.com/miniconda/
+    # conda-miniconda-version: "py310_25.7.0-2"
     conda-packages:
       - flask
       - flask-cors
       - gunicorn
-      - libtool
-      - nest-simulator==3.8
-      - nestml==8.0
-      # - norse
-      - numpy
-      - requests
+      # - libtool
+      - nest-simulator==3.9
+      # - nestml==8.2
       - restrictedpython
-      - werkzeug
       - --channel conda-forge
-    conda-python-version: "3.10"
+    conda-python-version: "3.12"
     stage:
       - -bin/nest-config
       - -doc
       - -extras
 
-  backend-server:
-    plugin: python
-    python-packages:
-      - nestml-server@git+https://github.com/babsey/nestml-server@v1.0
-      # - norse-server@git+https://github.com/babsey/norse-server.git
-      - --no-deps
-    source: https://github.com/nest-desktop/nest-desktop-snap
-    source-depth: 1
-    source-type: git
-    stage:
-      - bin/nestml-server
-      - lib/python3.10/site-packages/nestml_server
+  # backend-server:
+  #   plugin: python
+  #   python-packages:
+  #     - nestml-server@git+https://github.com/babsey/nestml-server@v1.0
+  #     # - norse-server@git+https://github.com/babsey/norse-server.git
+  #     - --no-deps
+  #   source: https://github.com/nest-desktop/nest-desktop-snap
+  #   source-depth: 1
+  #   source-type: git
+  #   stage:
+  #     - bin/nestml-server
+  #     - lib/python3.10/site-packages/nestml_server
