@@ -56,7 +56,7 @@ parts:
 
   nest-desktop:
     plugin: dump
-    source: https://github.com/nest-desktop/nest-desktop-electron/releases/download/v4.1.0/nest-desktop-4.1.0.tar.gz
+    source: https://github.com/nest-desktop/nest-desktop-electron/releases/download/v4.2.0/nest-desktop-4.2.0.tar.gz
     override-build: |
       cp -rv . ${CRAFT_PART_INSTALL}/nest-desktop
     stage-packages:
