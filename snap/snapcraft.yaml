@@ -6,35 +6,41 @@ title: NEST Desktop
 summary: Simulate spiking neuronal networks
 description: |
   Create spiking neuron models, run simulation and analyze the results.
-
-  **Are you having issues?**
-
-  Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
 license: MIT
 icon: snap/gui/nest-desktop.png
 version: 4.2.0
 
-base: core24
+source-code:
+  - https://github.com/nest-desktop/nest-desktop-snap
+contact:
+  - spreizer@web.de
+website:
+  - https://nest-desktop.github.io
+issues:
+  - https://github.com/nest-desktop/nest-desktop-snap/issues
+
+
+base: core22
 grade: stable # options: devel, stable
 confinement: strict
 
 # for core22
-# architectures:
-#   - build-on: [amd64]
+architectures:
+  - build-on: [amd64]
 
 # for core24
-platforms:
-  amd64:
-  arm64:
+# platforms:
+#   amd64:
+#   arm64:
 
 apps:
   nest-desktop:
     command: bin/nest-desktop-launch
     common-id: io.github.nest_desktop.nest-desktop
     desktop: usr/share/applications/nest-desktop.desktop
-    environment:
-      NESTML_MODULES_PATH: /tmp/nestmlmodules
-      NESTML_SERVER_TIMEOUT: 120
+    # environment:
+    #   NESTML_MODULES_PATH: /tmp/nestmlmodules
+    #   NESTML_SERVER_TIMEOUT: 120
     extensions: [gnome]
     plugs:
       - browser-support # use functions essential for web browsers
@@ -102,20 +108,26 @@ parts:
     build-environment:
       - CONDA_PLUGINS_AUTO_ACCEPT_TOS: "yes"
     # for core22
-      # - PATH: /root/miniconda/bin:$PATH
-      # - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
+      - PATH: /root/miniconda/bin:$PATH
+      - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
     # https://repo.anaconda.com/miniconda/
-    # conda-miniconda-version: "py310_25.7.0-2"
+    # conda-miniconda-version: "py310_25.9.1-3"
     conda-packages:
+      # - cmake>=3.12
+      # - cython
       - flask
       - flask-cors
       - gunicorn
-      # - libtool
+      - libtool
       - nest-simulator==3.9
+      - numpy
+      # - pandas
       # - nestml==8.2
+      - requests
       - restrictedpython
+      - werkzeug
       - --channel conda-forge
-    conda-python-version: "3.12"
+    conda-python-version: "3.10"
     stage:
       - -bin/nest-config
       - -doc
