@@ -17,9 +17,9 @@ export NEST_SERVER_MODULES="import nest; import numpy; import numpy as np"
 export NEST_SERVER_DAEMON=1
 nest-server start
 
-# Start NESTML Server as daemon
-export NESTML_SERVER_DAEMON=1
-nestml-server start
+# # Start NESTML Server as daemon
+# export NESTML_SERVER_DAEMON=1
+# nestml-server start
 
 # Start NEST Desktop
 nest-desktop --no-sandbox
@@ -27,5 +27,5 @@ nest-desktop --no-sandbox
 # Stop NEST Server
 nest-server stop
 
-# Stop NESTML Server
-nestml-server stop
+# # Stop NESTML Server
+# nestml-server stop
