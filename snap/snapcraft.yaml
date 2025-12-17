@@ -20,18 +20,18 @@ issues:
   - https://github.com/nest-desktop/nest-desktop-snap/issues
 
 
-base: core22
+base: core24
 grade: stable # options: devel, stable
 confinement: strict
 
 # for core22
-architectures:
-  - build-on: [amd64]
+# architectures:
+#   - build-on: [amd64]
 
 # for core24
-# platforms:
-#   amd64:
-#   arm64:
+platforms:
+  amd64:
+  arm64:
 
 apps:
   nest-desktop:
@@ -107,27 +107,16 @@ parts:
     plugin: conda
     build-environment:
       - CONDA_PLUGINS_AUTO_ACCEPT_TOS: "yes"
-    # for core22
-      - PATH: /root/miniconda/bin:$PATH
-      - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
-    # https://repo.anaconda.com/miniconda/
-    # conda-miniconda-version: "py310_25.9.1-3"
+    # conda-miniconda-version: "latest"   # https://repo.anaconda.com/miniconda/
     conda-packages:
-      # - cmake>=3.12
-      # - cython
       - flask
       - flask-cors
       - gunicorn
-      - libtool
       - nest-simulator==3.9
-      - numpy
-      # - pandas
       # - nestml==8.2
-      - requests
       - restrictedpython
-      - werkzeug
       - --channel conda-forge
-    conda-python-version: "3.10"
+    conda-python-version: "3.12"
     stage:
       - -bin/nest-config
       - -doc
