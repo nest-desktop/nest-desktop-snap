@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export PATH=${SNAP}/bin:$PATH
+unset PYTHONPATH    # Important! Otherwise platform._sys_version() throws value error.
 
-source nest_vars.sh
+source ${SNAP}/bin/nest_vars.sh
 
 # export NESTML_MODULES_PATH="${NESTML_MODULES_PATH:-/tmp/nestmlmodules}"
 # export NESTML_SERVER_TIMEOUT="${NESTML_MODULES_TIMEOUT:-120}"
