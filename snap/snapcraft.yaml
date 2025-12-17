@@ -1,34 +1,26 @@
 ---
 # https://www.electronjs.org/docs/latest/tutorial/snapcraft
+# https://snapcraft.io/docs/the-snap-format
+# https://forum.snapcraft.io/t/the-snap-format/698
 
 name: nest-desktop
 title: NEST Desktop
+license: MIT
+version: 4.2.0
+base: core24
 summary: Simulate spiking neuronal networks
 description: |
   Create spiking neuron models, run simulation and analyze the results.
-license: MIT
+source-code: https://github.com/nest-desktop/nest-desktop-snap
+contact: https://github.com/nest-desktop/nest-desktop
+website: https://nest-desktop.github.io
+issues: https://github.com/nest-desktop/nest-desktop-snap/issues
 icon: snap/gui/nest-desktop.png
-version: 4.2.0
 
-source-code:
-  - https://github.com/nest-desktop/nest-desktop-snap
-contact:
-  - spreizer@web.de
-website:
-  - https://nest-desktop.github.io
-issues:
-  - https://github.com/nest-desktop/nest-desktop-snap/issues
-
-
-base: core24
 grade: stable # options: devel, stable
 confinement: strict
+# compression: lzo
 
-# for core22
-# architectures:
-#   - build-on: [amd64]
-
-# for core24
 platforms:
   amd64:
   arm64:
@@ -53,18 +45,17 @@ parts:
     plugin: nil
     source: https://github.com/nest-desktop/nest-desktop-snap.git
 
-  desktop-launch:
+  local-parts:
     plugin: dump
-    source: .
-    stage:
-      - bin
-      - usr
+    source: snap/local
+    source-type: local
 
   nest-desktop:
     plugin: dump
-    source: https://github.com/nest-desktop/nest-desktop-electron/releases/download/v4.2.0/nest-desktop-4.2.0.tar.gz
+    source: https://github.com/nest-desktop/nest-desktop-electron/releases/download/v${SNAPCRAFT_PROJECT_VERSION}/nest-desktop-${SNAPCRAFT_PROJECT_VERSION}.tar.gz
     override-build: |
       cp -rv . ${CRAFT_PART_INSTALL}/nest-desktop
+      # sed -i 's|Icon=nest-desktop|Icon=/usr/share/icons/hicolor/256x256/apps/nest-desktop.png|' ${CRAFT_PART_INSTALL}/usr/share/applications/nest-desktop.desktop
     stage-packages:
       - libnspr4
       - libnss3
