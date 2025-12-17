@@ -6,13 +6,19 @@ title: NEST Desktop
 summary: Simulate spiking neuronal networks
 description: |
   Create spiking neuron models, run simulation and analyze the results.
-
-  **Are you having issues?**
-
-  Let us know by creating a new issue here: https://github.com/nest-desktop/nest-desktop-snap/issues
 license: MIT
 icon: snap/gui/nest-desktop.png
 version: 4.2.0
+
+source-code:
+  - https://github.com/nest-desktop/nest-desktop-snap
+contact:
+  - spreizer@web.de
+website:
+  - https://nest-desktop.github.io
+issues:
+  - https://github.com/nest-desktop/nest-desktop-snap/issues
+
 
 base: core24
 grade: stable # options: devel, stable
@@ -32,9 +38,9 @@ apps:
     command: bin/nest-desktop-launch
     common-id: io.github.nest_desktop.nest-desktop
     desktop: usr/share/applications/nest-desktop.desktop
-    environment:
-      NESTML_MODULES_PATH: /tmp/nestmlmodules
-      NESTML_SERVER_TIMEOUT: 120
+    # environment:
+    #   NESTML_MODULES_PATH: /tmp/nestmlmodules
+    #   NESTML_SERVER_TIMEOUT: 120
     extensions: [gnome]
     plugs:
       - browser-support # use functions essential for web browsers
@@ -101,16 +107,11 @@ parts:
     plugin: conda
     build-environment:
       - CONDA_PLUGINS_AUTO_ACCEPT_TOS: "yes"
-    # for core22
-      # - PATH: /root/miniconda/bin:$PATH
-      # - PYTHONPATH: /root/miniconda/lib/python3.10/site-packages
-    # https://repo.anaconda.com/miniconda/
-    # conda-miniconda-version: "py310_25.7.0-2"
+    # conda-miniconda-version: "latest"   # https://repo.anaconda.com/miniconda/
     conda-packages:
       - flask
       - flask-cors
       - gunicorn
-      # - libtool
       - nest-simulator==3.9
       # - nestml==8.2
       - restrictedpython
