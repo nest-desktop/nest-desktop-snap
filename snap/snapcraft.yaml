@@ -50,7 +50,7 @@ parts:
     source: snap/local
     source-type: local
 
-  nest-desktop:
+  nest-desktop-electron:
     plugin: dump
     source: https://github.com/nest-desktop/nest-desktop-electron/releases/download/v${SNAPCRAFT_PROJECT_VERSION}/nest-desktop-${SNAPCRAFT_PROJECT_VERSION}.tar.gz
     override-build: |
@@ -60,58 +60,25 @@ parts:
       - libnspr4
       - libnss3
 
-  # nest-simulator:
-  #   plugin: cmake
-  #   cmake-parameters:
-  #     - -DCMAKE_INSTALL_PREFIX:PATH=/usr
-  #     # - -DCMAKE_BUILD_TYPE=Release   # Compile without debug, make it faster
-  #   build-packages:
-  #     - build-essential
-  #     - cmake
-  #     - cython3
-  #     - libgsl-dev
-  #     - libltdl-dev
-  #     - libmpich-dev
-  #     - libncurses5-dev
-  #     - libopenmpi-dev
-  #     - libreadline-dev
-  #     - pandoc
-  #     - python3-dev
-  #     - python3-pip
-  #     - wget
-  #   override-build: |
-  #     python3 -m pip install cython
-  #     python3 -m pip install -r ${CRAFT_PART_SRC}/requirements_pynest.txt
-  #     python3 -m pip install -r ${CRAFT_PART_SRC}/requirements_nest_server.txt
-  #     craftctl default
-  #     # cmake -DCMAKE_INSTALL_PREFIX:PATH=${CRAFT_PART_INSTALL} ${CRAFT_PART_SRC}
-  #     # make -j $(nproc)
-  #     # make install
-  #   source: https://github.com/nest/nest-simulator.git
-  #   source-depth: 1
-  #   source-tag: v3.7
-  #   source-type: git
-  #   stage-packages:
-  #     - libgsl-dev
-
-  backend-tools:
-    plugin: conda
-    build-environment:
-      - CONDA_PLUGINS_AUTO_ACCEPT_TOS: "yes"
-    # conda-miniconda-version: "latest"   # https://repo.anaconda.com/miniconda/
-    conda-packages:
-      - flask
-      - flask-cors
-      - gunicorn
-      - nest-simulator==3.9
-      # - nestml==8.2
-      - restrictedpython
-      - --channel conda-forge
-    conda-python-version: "3.12"
-    stage:
-      - -bin/nest-config
-      - -doc
-      - -extras
+  nest-server:
+    plugin: python
+    python-packages:
+      - nest-server==3.0.0b6
+    source: .
+    build-packages:
+      - build-essential
+      - cmake
+      - cython3
+      - libgsl-dev
+      - libltdl-dev
+      - libncurses5-dev
+      - libreadline-dev
+      - pandoc
+      - python3-dev
+    stage-packages:
+      - libgsl-dev
+      - libltdl-dev
+      - python3
 
   # backend-server:
   #   plugin: python

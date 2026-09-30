@@ -2,8 +2,6 @@
 
 unset PYTHONPATH    # Important! Otherwise platform._sys_version() throws value error.
 
-source ${SNAP}/bin/nest_vars.sh
-
 # export NESTML_MODULES_PATH="${NESTML_MODULES_PATH:-/tmp/nestmlmodules}"
 # export NESTML_SERVER_TIMEOUT="${NESTML_MODULES_TIMEOUT:-120}"
 # export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${NESTML_MODULES_PATH}
@@ -22,7 +20,7 @@ nest-server start
 # nestml-server start
 
 # Start NEST Desktop
-${SNAP}/nest-desktop/nest-desktop --no-sandbox "$@"
+${SNAP}/nest-desktop/nest-desktop --no-sandbox --enable-unsafe-swiftshader "$@"
 
 # Stop NEST Server
 nest-server stop
