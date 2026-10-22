@@ -63,7 +63,7 @@ parts:
   nest-server:
     plugin: python
     python-packages:
-      - nest-server==3.0.0b6
+      - nest-server==3.0.0b9
     source: .
     build-packages:
       - build-essential
